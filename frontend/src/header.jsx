@@ -3,9 +3,13 @@ import './header.css'
 
 function Header() {
     return (
-        <header>
-            <h1></h1>
-        </header>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/champions">Champions</a>
+            <a href="/leaderboard">Leaderboard</a>
+            <a href="/statistics">Statistics</a>
+            <a href="/queue_types">Queue Types</a>
+        </nav>
     )
 }
 
