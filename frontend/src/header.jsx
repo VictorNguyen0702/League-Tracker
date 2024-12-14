@@ -3,34 +3,16 @@ import './header.css'
 
 function Header() {
     return (
-        <nav>
-            <a href="/">Home</a>
-            <a href="/champions">Champions</a>
-            <a href="/leaderboard">Leaderboard</a>
-            <a href="/statistics">Statistics</a>
-            <a href="/queue_types">Queue Types</a>
-            <form>
-                <select>
-                    <option value="">North America (NA)</option>
-                    <option value="">Europe West (EUW)</option>
-                    <option value="">Europe Nordic & East (EUNE)</option>
-                    <option value="">Oceania (OCE)</option>
-                    <option value="">Russia (RU)</option>
-                    <option value="">Turkey (TR)</option>
-                    <option value="">Brazil (BR)</option>
-                    <option value="">Latin America North (LAN)</option>
-                    <option value="">Latin America South (LAS)</option>
-                    <option value="">Japan (JP)</option>
-                    <option value="">Taiwan (TW)</option>
-                    <option value="">Singapore (SG)</option>
-                    <option value="">Thailand (TH)</option>
-                    <option value="">Philippines (PH)</option>
-                    <option value="">Middle East (ME)</option>
-                </select>
-                <input type="text" name="username" placeholder="Enter username"></input>
-            </form>
-            <a href = "/user">Log In</a>
-        </nav>
+        <div id="header">
+            <nav>
+                <a href="/" className="Header Link">Home</a>
+                <a href="/champions" className="Header Link">Champions</a>
+                <a href="/leaderboard" className="Header Link">Leaderboard</a>
+                <a href="/statistics" className="Header Link">Statistics</a>
+                <a href="/queue_types" className="Header Link">Queue Types</a>
+            </nav>
+            <a href="/user" className="Header Link">User Page Placeholder</a>
+        </div>
     )
 }
 
