@@ -13,5 +13,3 @@ db = client["mydatabase"]
 
 app = FastAPI()
 
-
-
