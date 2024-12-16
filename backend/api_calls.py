@@ -97,3 +97,4 @@ def get_league_entries_by_name(riot_id: str, region: str):
         print(f"Error getting summoner ID: {response.status_code}")
         return None
 
+print(get_league_entries_by_name("Vickles#OCE", "OCE"))
