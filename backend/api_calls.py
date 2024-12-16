@@ -24,7 +24,19 @@ regions_dict = {
     "ME": "mea1"
 }
 
-def get_league_by_queue(tier: str, queue: str, region: str, division: str = "I"):
+def get_summoner_id(summoner_name, region):
+
+    region_param = regions_dict[region]
+    url = f"https://{region_param}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{summoner_name}"
+    response = requests.get(url, headers = {"X-Riot-Token": API_key})
+    
+    if response.status_code == 200:
+        reurn = response.json()['id']
+    else:
+        print(f"Error getting summoner ID: {response.status_code}")
+        return None
+
+def get_league_by_queue(tier: str, queue: str, region: str, division: str = "I") -> dict | None:
     """
     Returns a list of players in a certain rank of a queue type for one region
 
