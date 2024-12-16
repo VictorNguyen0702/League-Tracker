@@ -81,3 +81,19 @@ def get_league_by_queue(tier: str, queue: str, region: str, division: str = "I")
         print(f"Error {response.status_code}: {response.json()}")
         return None
 
+def get_league_entries_by_name(riot_id: str, region: str):
+    """
+    Returns the league entries of a specific summoner
+    """
+
+    region_param = region_dict[region]
+    encrypted_summoner_id = get_encrypted_summoner_id(riot_id, region)
+    url = f"https://{region_param}.api.riotgames.com/lol/league/v4/entries/by-summoner/{encrypted_summoner_id}"
+
+    response = requests.get(url, headers = {"X-Riot-Token": API_key})
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Error getting summoner ID: {response.status_code}")
+        return None
+
