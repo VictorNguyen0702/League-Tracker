@@ -43,7 +43,7 @@ def get_encrypted_summoner_id(riot_id: str, region: str) -> str:
         return None
 
 
-def get_league_by_queue(tier: str, queue: str, region: str, division: str = "I") -> dict | None:
+def get_league_by_queue(region: str, queue: str, tier: str, division: str = "I") -> dict | None:
     """
     Returns a list of players in a certain rank of a queue type for one region
     """
@@ -75,4 +75,3 @@ def get_league_entries_by_name(riot_id: str, region: str):
         print(f"Error getting summoner ID: {response.status_code}")
         return None
 
-print(get_league_by_queue("Diamond", "solo", "OCE", "I"))
