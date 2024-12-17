@@ -28,7 +28,7 @@ def get_leaderboard(region: str, queue: str, tier: str, division: str) -> dict:
         return {}
 
 
-def download_leaderboard(region: str, queue: str, tier: str, division: str = "I") -> None:
+def download_leaderboard(region: str, queue: str, tier: str, division: str) -> None:
     leaderboard = client["ranks"]["leaderboard"]
 
     new_users = api_calls.get_league_by_queue(region, queue, tier, division)
