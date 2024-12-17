@@ -8,4 +8,5 @@ load_dotenv()
 mongoURL = os.getenv("MONGO_URL")
     
 client = MongoClient(mongoURL)
-db = client["mydatabase"] 
+
+
