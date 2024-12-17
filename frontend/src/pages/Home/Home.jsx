@@ -24,3 +24,5 @@ function Home() {
         </form>
     )
 }
+
+export default Home;

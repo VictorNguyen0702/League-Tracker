@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import './Header.css'
+import { Link } from 'react-router-dom';
+import Leaderboard from '../../pages/Leaderboard/Leaderboard';
 
 function Header() {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState('john_doe'); 
+
     let userLink;
     if (isLoggedIn) {
         userLink = { href: `/${username}`, text: "Profile Page"};
@@ -13,17 +16,17 @@ function Header() {
     }
 
     return (
-        <div id="header">
+<div id="header">
             <nav>
-                <a href="/" className="header-link">Home</a>
-                <a href="/champions" className="header-link">Champions</a>
-                <a href="/leaderboard" className="header-link">Leaderboard</a>
-                <a href="/statistics" className="header-link">Statistics</a>
-                <a href="/queue_types" className="header-link">Queue Types</a>
+                <Link to="/" className="header-link">Home</Link>
+                <Link to="/champions" className="header-link">Champions</Link>
+                <Link to="/leaderboard" className="header-link">Leaderboard</Link>
+                <Link to="/statistics" className="header-link">Statistics</Link>
+                <Link to="/queue_types" className="header-link">Queue Types</Link>
             </nav>
             <div id="user-page">
                 <img src="/imgs/profile-photo.png" alt="Logo" className="profile-image" />
-                <a href={userLink.href} className="user-link">{userLink.text}</a>
+                <Link to={userLink.href} className="user-link">{userLink.text}</Link>
             </div>
         </div>
     )
