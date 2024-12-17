@@ -14,7 +14,7 @@ client = MongoClient(mongoURL)
 # ------------------------ Functions for Leaderboard ------------------------ #
 
 
-def get_leaderboard(region: str, queue: str, tier: str, division: str) -> dict:
+def get_division_leaderboard(region: str, queue: str, tier: str, division: str) -> dict:
     leaderboard = client["ranks"]["leaderboard"]
 
     result = leaderboard.find_one(
@@ -22,13 +22,13 @@ def get_leaderboard(region: str, queue: str, tier: str, division: str) -> dict:
          f"queues.{queue}.tiers.{tier}.divisions.{division}": {"$exists": True}})
     
     if result:
-        users_dict = result.get("queues").get(queue).get("tiers").get(tier).get("divisions").get(division).get("users", {})
-        return users_dict
+        division_dict = result.get("queues").get(queue).get("tiers").get(tier).get("divisions").get(division)
+        return division_dict
     else:
         return {}
 
 
-def download_leaderboard(region: str, queue: str, tier: str, division: str) -> None:
+def download_division(region: str, queue: str, tier: str, division: str) -> None:
     leaderboard = client["ranks"]["leaderboard"]
 
     new_users = api_calls.get_league_by_queue(region, queue, tier, division)
