@@ -16,7 +16,7 @@ function Header() {
     }
 
     return (
-<div id="header">
+        <div id="header">
             <nav>
                 <Link to="/" className="header-link">Home</Link>
                 <Link to="/champions" className="header-link">Champions</Link>
