@@ -6,6 +6,9 @@ from dotenv import load_dotenv
 load_dotenv()
 API_key = os.getenv("RIOT_API_KEY")
 
+
+# ---------------------- Dictionaries for regions/queues ----------------------
+
 region_dict = {
     "NA": "na1",
     "EUW": "euw1",
@@ -28,6 +31,8 @@ queue_dict = {
     "solo": "RANKED_SOLO_5x5",
     "flex": "RANKED_FLEX_SR"
 }
+
+# ---------------- Helper Functions for puu id and summoner id ----------------
 
 
 def get_puuid(riot_id:str):
@@ -97,4 +102,3 @@ def get_league_entries_by_name(riot_id: str, region: str):
         print(f"Error getting summoner ID: {response.status_code}")
         return None
 
-print(get_league_entries_by_name("Vickles#OCE", "OCE"))
