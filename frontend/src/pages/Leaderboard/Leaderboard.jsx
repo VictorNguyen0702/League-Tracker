@@ -1,13 +1,16 @@
-import Header from "../../components/Header/Header.jsx";
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
+import axios from 'axios';
 
 function Leaderboard() {
+
     const [filters, setFilters] = useState({
         region: '',
         queue: '',
         tier: '',
         division: ''
     });
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const changeFilter = (e) => {
         const { name, value } = e.target;
@@ -16,6 +19,22 @@ function Leaderboard() {
             [name]: value
         });
     };
+
+    useEffect(() => {
+        setLoading(true);
+        axios.get(`http://127.0.0.1:8000/leaderboard/${filters.region}/${filters.queue}/${filters.tier}/${filters.division}`)
+            .then((response) => {
+                setData(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, [filters]);
+
+
     return (
         <div id="leaderboard-container">
             <div id="filters">
@@ -32,13 +51,13 @@ function Leaderboard() {
                             <option value="TR">Turkey (TR)</option>
                             <option value="BR">Brazil (BR)</option>
                             <option value="LAN">Latin America North (LAN)</option>
-                            <option value="">Latin America South (LAS)</option>
-                            <option value="">Japan (JP)</option>
-                            <option value="">Taiwan (TW)</option>
-                            <option value="">Singapore (SG)</option>
-                            <option value="">Thailand (TH)</option>
-                            <option value="">Philippines (PH)</option>
-                            <option value="">Middle East (ME)</option>
+                            <option value="LAS">Latin America South (LAS)</option>
+                            <option value="JP">Japan (JP)</option>
+                            <option value="TW">Taiwan (TW)</option>
+                            <option value="SG">Singapore (SG)</option>
+                            <option value="TH">Thailand (TH)</option>
+                            <option value="PH">Philippines (PH)</option>
+                            <option value="ME">Middle East (ME)</option>
                         </select>
                     </div>
                     <div className="filter-group">
@@ -64,7 +83,7 @@ function Leaderboard() {
                         </select>
                     </div>
                     <div className="filter-group">
-                        <label htmlFor="region">Division</label>
+                        <label htmlFor="division">Division</label>
                         <select id="division" name="division" value={filters.division} onChange={changeFilter}>
                             <option value="I">I</option>
                             <option value="II">II</option>
@@ -75,7 +94,6 @@ function Leaderboard() {
                 </form>
             </div>
             <div id="user-list">
-
             </div>
         </div>
     )
