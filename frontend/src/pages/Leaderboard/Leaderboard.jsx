@@ -4,13 +4,14 @@ import axios from 'axios';
 function Leaderboard() {
 
     const [filters, setFilters] = useState({
-        region: '',
-        queue: '',
-        tier: '',
-        division: ''
+        region: 'OCE',
+        queue: 'solo',
+        tier: 'diamond',
+        division: 'I'
     });
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [lastUpdated, setLastUpdated] = useState(null);
 
     const changeFilter = (e) => {
         const { name, value } = e.target;
@@ -24,8 +25,9 @@ function Leaderboard() {
         setLoading(true);
         axios.get(`http://127.0.0.1:8000/leaderboard/${filters.region}/${filters.queue}/${filters.tier}/${filters.division}`)
             .then((response) => {
-                setData(response.data);
-            })
+                setData(response.data.users);
+                setLastUpdated(response.data.last_updated);         
+                })
             .catch((error) => {
                 console.error("Error fetching data:", error);
             })
@@ -94,6 +96,27 @@ function Leaderboard() {
                 </form>
             </div>
             <div id="user-list">
+                {loading ? (
+                    <p>Loading leaderboard...</p>
+                ) : (
+                    <>
+                        <p>Last updated: {new Date(lastUpdated).toLocaleString()}</p> {/* Display the last updated time */}
+                        {data && data.length > 0 ? (
+                            data.map((player, index) => (
+                                <div key={index} className="player">
+                                    <strong>{player.summonerId}</strong><br />
+                                    Rank: {player.tier[0].toUpperCase() + player.tier.slice(1).toLowerCase()} {player.rank}<br />
+                                    Wins: {player.wins} | Losses: {player.losses}<br />
+                                    League Points: {player.leaguePoints}<br />
+                                    {player.hotStreak ? 'Hot Streak' : ''}
+                                    {player.freshBlood ? 'New Player' : ''}
+                                </div>
+                            ))
+                        ) : (
+                            <div>No players found for the selected filters.</div>
+                        )}
+                    </>
+                )}
             </div>
         </div>
     )
