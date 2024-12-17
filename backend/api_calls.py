@@ -48,8 +48,8 @@ def get_league_by_queue(region: str, queue: str, tier: str, division: str) -> di
     Returns a list of players in a certain rank of a queue type for one region
     """
 
-    if tier in ["master", "grandmaster", "challenger"]:
-        url = f"https://{region}.api.riotgames.com/lol/league/v4/{tier}leagues/by-queue/{queue}"
+    if tier.upper() in ["MASTER", "GRANDMASTER", "CHALLENGER"]:
+        url = f"https://{region}.api.riotgames.com/lol/league/v4/{tier.lower()}leagues/by-queue/{queue}"
     else:
         url = f"https://{region}.api.riotgames.com/lol/league/v4/entries/{queue}/{tier.upper()}/{division}"
 
