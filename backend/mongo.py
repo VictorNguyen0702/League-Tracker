@@ -1,7 +1,7 @@
 import api_calls
 from pymongo import MongoClient
 import os
-import datetime
+from datetime import datetime
 from dotenv import load_dotenv
 
 # Load environment variables from .env
@@ -32,7 +32,7 @@ def download_leaderboard(region: str, queue: str, tier: str, division: str = "I"
         {"region": region},
         {"$set": {
             f"queues.{queue}.tiers.{tier}.divisions.{division}.users": new_users,
-            f"queues.{queue}.tiers.{tier}.divisions.{division}.last_updated": datetime.datetime.now()
+            f"queues.{queue}.tiers.{tier}.divisions.{division}.last_updated": datetime.now()
             }
         },
         upsert = True
