@@ -1,5 +1,7 @@
 from fastapi import FastAPI
-
+import mongo
+import api_calls
+from datetime import datetime
 
 app = FastAPI()
 
@@ -26,6 +28,20 @@ region_dict = {
 }
 
 queue_dict = {
-    "solo": "RANKED_SOLO_5x5",
-    "flex": "RANKED_FLEX_SR"
+    "SOLO": "RANKED_SOLO_5x5",
+    "FLEX": "RANKED_FLEX_SR"
 }
+
+# ---------------------- API Endpoints for Leaderboard ---------------------- #
+
+
+@app.get("/leaderboard/{region}/{queue}/{tier}/{division}")
+def get_leaderboard(region: str, queue: str, tier: str, division: str):
+    region_param, queue_param = region_dict[region.upper()], queue_dict[queue.upper()]
+
+    division_dict = mongo.get_leaderboard(region_param, queue_param, tier, division)
+    if not division_dict or (datetime.now() - division_dict.get("last_updated")).total_seconds() / 60 > 15:
+        division_dict = mongo.download_division(region_param, queue_param, tier, division)
+    
+    return division_dict
+        
