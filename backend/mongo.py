@@ -10,7 +10,7 @@ mongoURL = os.getenv("MONGO_URL")
     
 client = MongoClient(mongoURL)
 
-def find_leaderboard(region: str, queue: str, tier: str, division: str) -> dict:
+def get_leaderboard(region: str, queue: str, tier: str, division: str) -> dict:
     leaderboard = client["ranks"]["leaderboard"]
 
     result = leaderboard.find_one(
