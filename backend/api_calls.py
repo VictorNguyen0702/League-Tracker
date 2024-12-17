@@ -8,7 +8,7 @@ API_key = os.getenv("RIOT_API_KEY")
 
 
 
-# ---------------- Helper Functions for puu id and summoner id ----------------
+# --------------- Helper Functions for puu id and summoner id --------------- #
 
 
 def get_puuid(riot_id:str):
@@ -59,6 +59,7 @@ def get_league_by_queue(region: str, queue: str, tier: str, division: str = "I")
     else:
         print(f"Error {response.status_code}: {response.json()}")
         return None
+
 
 def get_league_entries_by_name(riot_id: str, region: str):
     """

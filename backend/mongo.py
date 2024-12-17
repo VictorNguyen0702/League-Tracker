@@ -7,8 +7,12 @@ from dotenv import load_dotenv
 # Load environment variables from .env
 load_dotenv()
 mongoURL = os.getenv("MONGO_URL")
-    
 client = MongoClient(mongoURL)
+
+
+
+# ------------------------ Functions for Leaderboard ------------------------ #
+
 
 def get_leaderboard(region: str, queue: str, tier: str, division: str) -> dict:
     leaderboard = client["ranks"]["leaderboard"]

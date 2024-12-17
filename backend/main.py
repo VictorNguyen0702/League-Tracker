@@ -4,7 +4,8 @@ from fastapi import FastAPI
 app = FastAPI()
 
 
-# ---------------------- Dictionaries for regions/queues ----------------------
+# --------------------- Dictionaries for regions/queues --------------------- #
+
 
 region_dict = {
     "NA": "na1",
