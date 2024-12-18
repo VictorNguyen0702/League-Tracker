@@ -4,10 +4,10 @@ import axios from 'axios';
 function Leaderboard() {
 
     const [filters, setFilters] = useState({
-        region: 'OCE',
-        queue: 'solo',
-        tier: 'diamond',
-        division: 'I'
+        region: '',
+        queue: '',
+        tier: '',
+        division: ''
     });
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -22,9 +22,17 @@ function Leaderboard() {
     };
 
     useEffect(() => {
+        const { region, queue, tier, division } = filters;
+        if (region === "" || queue === ""  || tier === ""  || division === "" ) {
+            setData([]);
+            setLastUpdated(null);
+            setLoading(false);
+            return;
+        }
         setLoading(true);
         axios.get(`http://127.0.0.1:8000/leaderboard/${filters.region}/${filters.queue}/${filters.tier}/${filters.division}`)
             .then((response) => {
+
                 setData(response.data.users);
                 setLastUpdated(response.data.last_updated);         
                 })
@@ -45,6 +53,7 @@ function Leaderboard() {
                     <div className="filter-group">
                         <label htmlFor="region">Region</label>
                         <select id="region" name="region" value={filters.region} onChange={changeFilter}>
+                            <option value=""></option>
                             <option value="NA">North America (NA)</option>
                             <option value="EUW">Europe West (EUW)</option>
                             <option value="EUNE">Europe Nordic & East (EUNE)</option>
@@ -65,6 +74,7 @@ function Leaderboard() {
                     <div className="filter-group">
                         <label htmlFor="queue-type">Queue</label>
                         <select id="queue" name="queue" value={filters.queue} onChange={changeFilter}>
+                            <option value=""></option>
                             <option value="solo">Ranked Solo/Duo</option>
                             <option value="flex">Ranked Flex</option>
                         </select>
@@ -72,6 +82,7 @@ function Leaderboard() {
                     <div className="filter-group">
                         <label htmlFor="tier">Tier</label>
                         <select id="tier" name="tier" value={filters.tier} onChange={changeFilter}>
+                            <option value=""></option>
                             <option value="iron">Iron</option>
                             <option value="bronze">Bronze</option>
                             <option value="silver">Silver</option>
@@ -87,6 +98,7 @@ function Leaderboard() {
                     <div className="filter-group">
                         <label htmlFor="division">Division</label>
                         <select id="division" name="division" value={filters.division} onChange={changeFilter}>
+                            <option value=""></option>
                             <option value="I">I</option>
                             <option value="II">II</option>
                             <option value="III">III</option>
