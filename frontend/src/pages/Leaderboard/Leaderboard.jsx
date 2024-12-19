@@ -1,6 +1,16 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+
+import './Leaderboard.css'
+
 function Leaderboard() {
 
     const [filters, setFilters] = useState({
@@ -9,17 +19,25 @@ function Leaderboard() {
         tier: '',
         division: ''
     });
+    const [queue, setQueue] = useState({queue: ''})
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [lastUpdated, setLastUpdated] = useState(null);
 
-    const changeFilter = (e) => {
-        const { name, value } = e.target;
+    const changeFilter = (event) => {
+        const { name, value } = event.target;
         setFilters({
             ...filters,
             [name]: value
         });
     };
+    
+    const changeQueue = (event) => {
+        setFilters({
+            ...filters,
+            queue: event.currentTarget.value
+        });
+    }
 
     useEffect(() => {
         const { region, queue, tier, division } = filters;
@@ -32,7 +50,6 @@ function Leaderboard() {
         setLoading(true);
         axios.get(`http://127.0.0.1:8000/leaderboard/${filters.region}/${filters.queue}/${filters.tier}/${filters.division}`)
             .then((response) => {
-
                 setData(response.data.users);
                 setLastUpdated(response.data.last_updated);         
                 })
@@ -48,63 +65,62 @@ function Leaderboard() {
     return (
         <div id="leaderboard-container">
             <div id="filters">
-                <h2> Rank Filters</h2>
-                <form>
-                    <div className="filter-group">
-                        <label htmlFor="region">Region</label>
-                        <select id="region" name="region" value={filters.region} onChange={changeFilter}>
-                            <option value=""></option>
-                            <option value="NA">North America (NA)</option>
-                            <option value="EUW">Europe West (EUW)</option>
-                            <option value="EUNE">Europe Nordic & East (EUNE)</option>
-                            <option value="OCE">Oceania (OCE)</option>
-                            <option value="RU">Russia (RU)</option>
-                            <option value="TR">Turkey (TR)</option>
-                            <option value="BR">Brazil (BR)</option>
-                            <option value="LAN">Latin America North (LAN)</option>
-                            <option value="LAS">Latin America South (LAS)</option>
-                            <option value="JP">Japan (JP)</option>
-                            <option value="TW">Taiwan (TW)</option>
-                            <option value="SG">Singapore (SG)</option>
-                            <option value="TH">Thailand (TH)</option>
-                            <option value="PH">Philippines (PH)</option>
-                            <option value="ME">Middle East (ME)</option>
-                        </select>
-                    </div>
-                    <div className="filter-group">
-                        <label htmlFor="queue-type">Queue</label>
-                        <select id="queue" name="queue" value={filters.queue} onChange={changeFilter}>
-                            <option value=""></option>
-                            <option value="solo">Ranked Solo/Duo</option>
-                            <option value="flex">Ranked Flex</option>
-                        </select>
-                    </div>
-                    <div className="filter-group">
-                        <label htmlFor="tier">Tier</label>
-                        <select id="tier" name="tier" value={filters.tier} onChange={changeFilter}>
-                            <option value=""></option>
-                            <option value="iron">Iron</option>
-                            <option value="bronze">Bronze</option>
-                            <option value="silver">Silver</option>
-                            <option value="gold">Gold</option>
-                            <option value="platinum">Platinum</option>
-                            <option value="emerald">Emerald</option>
-                            <option value="diamond">Diamond</option>
-                            <option value="master">Master</option>
-                            <option value="grandmaster">Grandmaster</option>
-                            <option value="challenger">Challenger</option>
-                        </select>
-                    </div>
-                    <div className="filter-group">
-                        <label htmlFor="division">Division</label>
-                        <select id="division" name="division" value={filters.division} onChange={changeFilter}>
-                            <option value=""></option>
-                            <option value="I">I</option>
-                            <option value="II">II</option>
-                            <option value="III">III</option>
-                            <option value="IV">IV</option>
-                        </select>
-                    </div>
+                <form className="filter-form">
+                    <ButtonGroup variant="contained" aria-label="Queue Type">
+                        <Button value="solo" onClick={changeQueue} className={`queue-button ${filters.queue === "solo" ? " selected" : ""}`}>Ranked Solo</Button>
+                        <Button value="flex" onClick={changeQueue} className={`queue-button ${filters.queue === "flex" ? "selected" : ""}`}>Ranked Flex</Button>
+                    </ButtonGroup>
+                    <Box sx={{ width: 300}} className="filter-group">
+                        <FormControl fullWidth>
+                            <InputLabel id="region-select-label">Region</InputLabel>
+                            <Select labelId="region-select-label" id="region-select" name = "region" value={filters.region} label="region" onChange={changeFilter}>
+                                <MenuItem value=""></MenuItem>
+                                <MenuItem value="NA">North America (NA)</MenuItem>
+                                <MenuItem value="EUW">Europe West (EUW)</MenuItem>
+                                <MenuItem value="EUNE">Europe Nordic & East (EUNE)</MenuItem>
+                                <MenuItem value="OCE">Oceania (OCE)</MenuItem>
+                                <MenuItem value="RU">Russia (RU)</MenuItem>
+                                <MenuItem value="TR">Turkey (TR)</MenuItem>
+                                <MenuItem value="BR">Brazil (BR)</MenuItem>
+                                <MenuItem value="LAN">Latin America North (LAN)</MenuItem>
+                                <MenuItem value="LAS">Latin America South (LAS)</MenuItem>
+                                <MenuItem value="JP">Japan (JP)</MenuItem>
+                                <MenuItem value="TW">Taiwan (TW)</MenuItem>
+                                <MenuItem value="SG">Singapore (SG)</MenuItem>
+                                <MenuItem value="TH">Thailand (TH)</MenuItem>
+                                <MenuItem value="PH">Philippines (PH)</MenuItem>
+                                <MenuItem value="ME">Middle East (ME)</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
+                    <Box sx={{ width: 150}} className="filter-group">
+                        <FormControl fullWidth>
+                            <InputLabel id="tier-select-label">Tier</InputLabel>
+                            <Select labelId="tier-select-label" id="tier-select" name = "tier" value={filters.tier} label="Tier" onChange={changeFilter}>
+                                <MenuItem value="iron">Iron</MenuItem>
+                                <MenuItem value="bronze">Bronze</MenuItem>
+                                <MenuItem value="silver">Silver</MenuItem>
+                                <MenuItem value="gold">Gold</MenuItem>
+                                <MenuItem value="platinum">Platinum</MenuItem>
+                                <MenuItem value="emerald">Emerald</MenuItem>
+                                <MenuItem value="diamond">Diamond</MenuItem>
+                                <MenuItem value="master">Master</MenuItem>
+                                <MenuItem value="grandmaster">Grandmaster</MenuItem>
+                                <MenuItem value="challenger">Challenger</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
+                    <Box sx={{ width: 120}} className="filter-group">
+                        <FormControl fullWidth>
+                            <InputLabel id="division-select-label">Division</InputLabel>
+                            <Select labelId="division-select-label" id="division-select" name = "division" value={filters.division} label="division" onChange={changeFilter}>
+                                <MenuItem value="I">I</MenuItem>
+                                <MenuItem value="II">II</MenuItem>
+                                <MenuItem value="III">III</MenuItem>
+                                <MenuItem value="IV">IV</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
                 </form>
             </div>
             <div id="user-list">
