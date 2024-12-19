@@ -2,3 +2,12 @@
 .filter-group {
     align-items: left;
 }
+
+.queue-button {
+    background-color: gray;
+    color: white;
+}
+
+.queue-button.selected {
+    background-color: darkgray;
+}

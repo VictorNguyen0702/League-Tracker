@@ -1,10 +1,15 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
+
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+
+import './Leaderboard.css'
 
 function Leaderboard() {
 
@@ -14,17 +19,25 @@ function Leaderboard() {
         tier: '',
         division: ''
     });
+    const [queue, setQueue] = useState({queue: ''})
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [lastUpdated, setLastUpdated] = useState(null);
 
-    const changeFilter = (e) => {
-        const { name, value } = e.target;
+    const changeFilter = (event) => {
+        const { name, value } = event.target;
         setFilters({
             ...filters,
             [name]: value
         });
     };
+    
+    const changeQueue = (event) => {
+        setFilters({
+            ...filters,
+            queue: event.currentTarget.value
+        });
+    }
 
     useEffect(() => {
         const { region, queue, tier, division } = filters;
@@ -52,32 +65,35 @@ function Leaderboard() {
     return (
         <div id="leaderboard-container">
             <div id="filters">
-                <h2> Rank Filters</h2>
                 <form className="filter-form">
-                <Box sx={{ width: 120}} className="filter-group">
+                    <ButtonGroup variant="contained" aria-label="Queue Type">
+                        <Button value="solo" onClick={changeQueue} className={`queue-button ${filters.queue === "solo" ? " selected" : ""}`}>Ranked Solo</Button>
+                        <Button value="flex" onClick={changeQueue} className={`queue-button ${filters.queue === "flex" ? "selected" : ""}`}>Ranked Flex</Button>
+                    </ButtonGroup>
+                    <Box sx={{ width: 300}} className="filter-group">
                         <FormControl fullWidth>
                             <InputLabel id="region-select-label">Region</InputLabel>
                             <Select labelId="region-select-label" id="region-select" name = "region" value={filters.region} label="region" onChange={changeFilter}>
-                            <MenuItem value=""></MenuItem>
-                            <MenuItem value="NA">North America (NA)</MenuItem>
-                            <MenuItem value="EUW">Europe West (EUW)</MenuItem>
-                            <MenuItem value="EUNE">Europe Nordic & East (EUNE)</MenuItem>
-                            <MenuItem value="OCE">Oceania (OCE)</MenuItem>
-                            <MenuItem value="RU">Russia (RU)</MenuItem>
-                            <MenuItem value="TR">Turkey (TR)</MenuItem>
-                            <MenuItem value="BR">Brazil (BR)</MenuItem>
-                            <MenuItem value="LAN">Latin America North (LAN)</MenuItem>
-                            <MenuItem value="LAS">Latin America South (LAS)</MenuItem>
-                            <MenuItem value="JP">Japan (JP)</MenuItem>
-                            <MenuItem value="TW">Taiwan (TW)</MenuItem>
-                            <MenuItem value="SG">Singapore (SG)</MenuItem>
-                            <MenuItem value="TH">Thailand (TH)</MenuItem>
-                            <MenuItem value="PH">Philippines (PH)</MenuItem>
-                            <MenuItem value="ME">Middle East (ME)</MenuItem>
+                                <MenuItem value=""></MenuItem>
+                                <MenuItem value="NA">North America (NA)</MenuItem>
+                                <MenuItem value="EUW">Europe West (EUW)</MenuItem>
+                                <MenuItem value="EUNE">Europe Nordic & East (EUNE)</MenuItem>
+                                <MenuItem value="OCE">Oceania (OCE)</MenuItem>
+                                <MenuItem value="RU">Russia (RU)</MenuItem>
+                                <MenuItem value="TR">Turkey (TR)</MenuItem>
+                                <MenuItem value="BR">Brazil (BR)</MenuItem>
+                                <MenuItem value="LAN">Latin America North (LAN)</MenuItem>
+                                <MenuItem value="LAS">Latin America South (LAS)</MenuItem>
+                                <MenuItem value="JP">Japan (JP)</MenuItem>
+                                <MenuItem value="TW">Taiwan (TW)</MenuItem>
+                                <MenuItem value="SG">Singapore (SG)</MenuItem>
+                                <MenuItem value="TH">Thailand (TH)</MenuItem>
+                                <MenuItem value="PH">Philippines (PH)</MenuItem>
+                                <MenuItem value="ME">Middle East (ME)</MenuItem>
                             </Select>
                         </FormControl>
                     </Box>
-                    <Box sx={{ width: 120}} className="filter-group">
+                    <Box sx={{ width: 150}} className="filter-group">
                         <FormControl fullWidth>
                             <InputLabel id="tier-select-label">Tier</InputLabel>
                             <Select labelId="tier-select-label" id="tier-select" name = "tier" value={filters.tier} label="Tier" onChange={changeFilter}>
@@ -96,7 +112,7 @@ function Leaderboard() {
                     </Box>
                     <Box sx={{ width: 120}} className="filter-group">
                         <FormControl fullWidth>
-                            <InputLabel id="division-select-label">Tier</InputLabel>
+                            <InputLabel id="division-select-label">Division</InputLabel>
                             <Select labelId="division-select-label" id="division-select" name = "division" value={filters.division} label="division" onChange={changeFilter}>
                                 <MenuItem value="I">I</MenuItem>
                                 <MenuItem value="II">II</MenuItem>
