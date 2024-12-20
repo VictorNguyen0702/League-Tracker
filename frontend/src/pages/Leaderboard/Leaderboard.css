@@ -1,13 +1,79 @@
 
-.filter-group {
-    align-items: left;
+#queue-buttons {
+    display: flex;
+    gap: 30px;
+    padding: 50px 50px 0 50px;
 }
 
-.queue-button {
-    background-color: gray;
+.queue-button.unselected {
+    background-color: rgb(62, 62, 62);
     color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
 }
 
 .queue-button.selected {
-    background-color: darkgray;
+    background-color: rgb(89, 89, 89);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+
+.filter-dropdown {
+    background-color: rgb(62, 62, 62);
+    margin: 10px 0;
+    border-radius: 12px; 
+    color: white;
+}
+
+#region-select {
+    color: rgb(221, 220, 220);
+}
+
+#tier-select {
+    color: rgb(221, 220, 220);
+}
+
+#division-select {
+    color: rgb(221, 220, 220);
+}
+
+#region-select-label {
+    color: rgb(221, 220, 220);
+}
+
+#tier-select-label {
+    color: rgb(221, 220, 220);
+}
+
+#division-select-label {
+    color: rgb(221, 220, 220);
+}
+
+#filter-dropdown-group {
+    padding: 50px;
+
+}
+.filter-select.Mui-focused.MuiOutlinedInput-notchedOutline {
+    border-color: black;
+    color: white;
+}
+
+.filter-dropdown.MuiOutlinedInput-notchedOutline {
+    background-color: rgb(62, 62, 62);
+    border-radius: 12px; 
+}
+
+#last-update {
+    text-align: left;
+    padding-top: 50px;
+}
+
+
+#leaderboard-and-filters {
+    display: flex;
+}
+
+#user-list {
+    padding: 50px 100px;
 }

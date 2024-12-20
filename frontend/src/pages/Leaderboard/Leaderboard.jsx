@@ -65,86 +65,91 @@ function Leaderboard() {
     return (
         <div id="leaderboard-container">
             <div id="filters">
-                <form className="filter-form">
-                    <ButtonGroup variant="contained" aria-label="Queue Type">
-                        <Button value="solo" onClick={changeQueue} className={`queue-button ${filters.queue === "solo" ? " selected" : ""}`}>Ranked Solo</Button>
-                        <Button value="flex" onClick={changeQueue} className={`queue-button ${filters.queue === "flex" ? "selected" : ""}`}>Ranked Flex</Button>
-                    </ButtonGroup>
-                    <Box sx={{ width: 300}} className="filter-group">
-                        <FormControl fullWidth>
-                            <InputLabel id="region-select-label">Region</InputLabel>
-                            <Select labelId="region-select-label" id="region-select" name = "region" value={filters.region} label="region" onChange={changeFilter}>
-                                <MenuItem value=""></MenuItem>
-                                <MenuItem value="NA">North America (NA)</MenuItem>
-                                <MenuItem value="EUW">Europe West (EUW)</MenuItem>
-                                <MenuItem value="EUNE">Europe Nordic & East (EUNE)</MenuItem>
-                                <MenuItem value="OCE">Oceania (OCE)</MenuItem>
-                                <MenuItem value="RU">Russia (RU)</MenuItem>
-                                <MenuItem value="TR">Turkey (TR)</MenuItem>
-                                <MenuItem value="BR">Brazil (BR)</MenuItem>
-                                <MenuItem value="LAN">Latin America North (LAN)</MenuItem>
-                                <MenuItem value="LAS">Latin America South (LAS)</MenuItem>
-                                <MenuItem value="JP">Japan (JP)</MenuItem>
-                                <MenuItem value="TW">Taiwan (TW)</MenuItem>
-                                <MenuItem value="SG">Singapore (SG)</MenuItem>
-                                <MenuItem value="TH">Thailand (TH)</MenuItem>
-                                <MenuItem value="PH">Philippines (PH)</MenuItem>
-                                <MenuItem value="ME">Middle East (ME)</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Box>
-                    <Box sx={{ width: 150}} className="filter-group">
-                        <FormControl fullWidth>
-                            <InputLabel id="tier-select-label">Tier</InputLabel>
-                            <Select labelId="tier-select-label" id="tier-select" name = "tier" value={filters.tier} label="Tier" onChange={changeFilter}>
-                                <MenuItem value="iron">Iron</MenuItem>
-                                <MenuItem value="bronze">Bronze</MenuItem>
-                                <MenuItem value="silver">Silver</MenuItem>
-                                <MenuItem value="gold">Gold</MenuItem>
-                                <MenuItem value="platinum">Platinum</MenuItem>
-                                <MenuItem value="emerald">Emerald</MenuItem>
-                                <MenuItem value="diamond">Diamond</MenuItem>
-                                <MenuItem value="master">Master</MenuItem>
-                                <MenuItem value="grandmaster">Grandmaster</MenuItem>
-                                <MenuItem value="challenger">Challenger</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Box>
-                    <Box sx={{ width: 120}} className="filter-group">
-                        <FormControl fullWidth>
-                            <InputLabel id="division-select-label">Division</InputLabel>
-                            <Select labelId="division-select-label" id="division-select" name = "division" value={filters.division} label="division" onChange={changeFilter}>
-                                <MenuItem value="I">I</MenuItem>
-                                <MenuItem value="II">II</MenuItem>
-                                <MenuItem value="III">III</MenuItem>
-                                <MenuItem value="IV">IV</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Box>
-                </form>
-            </div>
-            <div id="user-list">
-                {loading ? (
-                    <p>Loading leaderboard...</p>
-                ) : (
-                    <>
-                        <p>Last updated: {new Date(lastUpdated).toLocaleString()}</p> {/* Display the last updated time */}
-                        {data && data.length > 0 ? (
-                            data.map((player, index) => (
-                                <div key={index} className="player">
-                                    <strong>{player.summonerId}</strong><br />
-                                    Rank: {player.tier[0].toUpperCase() + player.tier.slice(1).toLowerCase()} {player.rank}<br />
-                                    Wins: {player.wins} | Losses: {player.losses}<br />
-                                    League Points: {player.leaguePoints}<br />
-                                    {player.hotStreak ? 'Hot Streak' : ''}
-                                    {player.freshBlood ? 'New Player' : ''}
-                                </div>
-                            ))
+                <div id="queue-buttons">
+                    <Button value="flex" onClick={changeQueue} className={`queue-button${filters.queue === "flex" ? " selected" : " unselected"}`}>Ranked Flex</Button>
+                    <Button value="solo" onClick={changeQueue} className={`queue-button${filters.queue === "solo" ? " selected" : " unselected"}`}>Ranked Solo</Button>
+                </div>
+                <div id="leaderboard-and-filters">
+                    <div id="filter-dropdown-group">
+                        <Box sx={{ width: 300}} className="filter-dropdown">
+                            <FormControl fullWidth>
+                                <InputLabel id="region-select-label">Region</InputLabel>
+                                <Select labelId="region-select-label" id="region-select" className="filter-select" name = "region" value={filters.region} label="region" onChange={changeFilter}>
+                                    <MenuItem value=""></MenuItem>
+                                    <MenuItem value="NA">North America (NA)</MenuItem>
+                                    <MenuItem value="EUW">Europe West (EUW)</MenuItem>
+                                    <MenuItem value="EUNE">Europe Nordic & East (EUNE)</MenuItem>
+                                    <MenuItem value="OCE">Oceania (OCE)</MenuItem>
+                                    <MenuItem value="RU">Russia (RU)</MenuItem>
+                                    <MenuItem value="TR">Turkey (TR)</MenuItem>
+                                    <MenuItem value="BR">Brazil (BR)</MenuItem>
+                                    <MenuItem value="LAN">Latin America North (LAN)</MenuItem>
+                                    <MenuItem value="LAS">Latin America South (LAS)</MenuItem>
+                                    <MenuItem value="JP">Japan (JP)</MenuItem>
+                                    <MenuItem value="TW">Taiwan (TW)</MenuItem>
+                                    <MenuItem value="SG">Singapore (SG)</MenuItem>
+                                    <MenuItem value="TH">Thailand (TH)</MenuItem>
+                                    <MenuItem value="PH">Philippines (PH)</MenuItem>
+                                    <MenuItem value="ME">Middle East (ME)</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
+                        <Box sx={{ width: 150}} className="filter-dropdown">
+                            <FormControl fullWidth>
+                                <InputLabel id="tier-select-label">Tier</InputLabel>
+                                <Select labelId="tier-select-label" id="tier-select" className="filter-select" name = "tier" value={filters.tier} label="Tier" onChange={changeFilter}>
+                                    <MenuItem value=""></MenuItem>
+                                    <MenuItem value="iron">Iron</MenuItem>
+                                    <MenuItem value="bronze">Bronze</MenuItem>
+                                    <MenuItem value="silver">Silver</MenuItem>
+                                    <MenuItem value="gold">Gold</MenuItem>
+                                    <MenuItem value="platinum">Platinum</MenuItem>
+                                    <MenuItem value="emerald">Emerald</MenuItem>
+                                    <MenuItem value="diamond">Diamond</MenuItem>
+                                    <MenuItem value="master">Master</MenuItem>
+                                    <MenuItem value="grandmaster">Grandmaster</MenuItem>
+                                    <MenuItem value="challenger">Challenger</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
+                        <Box sx={{ width: 120}} className="filter-dropdown">
+                            <FormControl fullWidth>
+                                <InputLabel id="division-select-label">Division</InputLabel>
+                                <Select labelId="division-select-label" id="division-select" className="filter-select" name = "division" value={filters.division} label="division" onChange={changeFilter}>
+                                    <MenuItem value=""></MenuItem>
+                                    <MenuItem value="I">I</MenuItem>
+                                    <MenuItem value="II">II</MenuItem>
+                                    <MenuItem value="III">III</MenuItem>
+                                    <MenuItem value="IV">IV</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
+                        {data && data.length > 0 ? (<p id="last-update">Last Update: {new Date(lastUpdated).toLocaleString()}</p>) : (<p id="last-update">Last Update: N/A</p>)}
+                    </div>
+                    <div id="user-list">
+                        {loading ? (
+                            <p>Loading leaderboard...</p>
                         ) : (
-                            <div>No players found for the selected filters.</div>
+                            <>
+                                
+                                {data && data.length > 0 ? (
+                                    data.map((player, index) => (
+                                        <div key={index} className="player">
+                                            <strong>{player.summonerId}</strong><br />
+                                            Rank: {player.tier[0].toUpperCase() + player.tier.slice(1).toLowerCase()} {player.rank}<br />
+                                            Wins: {player.wins} | Losses: {player.losses}<br />
+                                            League Points: {player.leaguePoints}<br />
+                                            {player.hotStreak ? 'Hot Streak' : ''}
+                                            {player.freshBlood ? 'New Player' : ''}
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div>No players found for the selected filters.</div>
+                                )}
+                            </>
                         )}
-                    </>
-                )}
+                    </div>
+                </div>
             </div>
         </div>
     )
