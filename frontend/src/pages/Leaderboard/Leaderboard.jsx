@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import * as React from 'react';
 import axios from 'axios';
 
 import Box from '@mui/material/Box';
@@ -7,22 +7,101 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-
+import PropTypes from 'prop-types';
+import { useTheme } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableHead from '@mui/material/TableHead';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableFooter from '@mui/material/TableFooter';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import IconButton from '@mui/material/IconButton';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import LastPageIcon from '@mui/icons-material/LastPage';
 import './Leaderboard.css'
+
+function TablePaginationActions(props) {
+    const theme = useTheme();
+    const { count, page, rowsPerPage, onPageChange } = props;
+  
+    const handleFirstPageButtonClick = (event) => {
+      onPageChange(event, 0);
+    };
+  
+    const handleBackButtonClick = (event) => {
+      onPageChange(event, page - 1);
+    };
+  
+    const handleNextButtonClick = (event) => {
+      onPageChange(event, page + 1);
+    };
+  
+    const handleLastPageButtonClick = (event) => {
+      onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+    };
+  
+    return (
+      <Box sx={{ flexShrink: 0, ml: 2.5 }}>
+        <IconButton
+          onClick={handleFirstPageButtonClick}
+          disabled={page === 0}
+          aria-label="first page"
+        >
+          {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+        </IconButton>
+        <IconButton
+          onClick={handleBackButtonClick}
+          disabled={page === 0}
+          aria-label="previous page"
+        >
+          {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+        </IconButton>
+        <IconButton
+          onClick={handleNextButtonClick}
+          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+          aria-label="next page"
+        >
+          {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+        </IconButton>
+        <IconButton
+          onClick={handleLastPageButtonClick}
+          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+          aria-label="last page"
+        >
+          {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+        </IconButton>
+      </Box>
+    );
+  }
+  
+  TablePaginationActions.propTypes = {
+    count: PropTypes.number.isRequired,
+    onPageChange: PropTypes.func.isRequired,
+    page: PropTypes.number.isRequired,
+    rowsPerPage: PropTypes.number.isRequired,
+  };
+  
+  function createData(name, calories, fat) {
+    return { name, calories, fat };
+  }
 
 function Leaderboard() {
 
-    const [filters, setFilters] = useState({
+    const [filters, setFilters] = React.useState({
         region: '',
         queue: '',
         tier: '',
         division: ''
     });
-    const [queue, setQueue] = useState({queue: ''})
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [lastUpdated, setLastUpdated] = useState(null);
+    const [queue, setQueue] = React.useState({queue: ''})
+    const [data, setData] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
+    const [lastUpdated, setLastUpdated] = React.useState(null);
 
     const changeFilter = (event) => {
         const { name, value } = event.target;
@@ -38,8 +117,50 @@ function Leaderboard() {
             queue: event.currentTarget.value
         });
     }
+    const [rows, setRows] = React.useState([]);
 
-    useEffect(() => {
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  
+    // Avoid a layout jump when reaching the last page with empty rows.
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  
+    const columns = [
+        { field: 'name', headerName: 'Summoner Name', width: 150 },
+        { field: 'rank', headerName: 'Rank', width: 130 },
+        { field: 'winRate', headerName: 'Win | Loss', width: 120 },
+        {
+          field: 'leaguePoints',
+          headerName: 'League Points',
+          type: 'number',
+          width: 110,
+        },
+        {
+          field: 'hotStreak',
+          headerName: 'Hot Streak',
+          description: 'Indicates if the player is on a hot streak.',
+          sortable: false,
+          width: 100,
+        },
+        {
+          field: 'freshBlood',
+          headerName: 'Newbie',
+          description: 'Indicates if the player is new.',
+          sortable: false,
+          width: 100,
+        },
+      ];
+      
+    const handleChangePage = (event, newPage) => {
+      setPage(newPage);
+    };
+  
+    const handleChangeRowsPerPage = (event) => {
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0);
+    };
+
+    React.useEffect(() => {
         const { region, queue, tier, division } = filters;
         if (region === "" || queue === ""  || tier === ""  || division === "" ) {
             setData([]);
@@ -59,17 +180,33 @@ function Leaderboard() {
             .finally(() => {
                 setLoading(false);
             });
+            if (data && data.length > 0) {
+                // Map data into row structure
+                const playerRows = data.map((player) => ({
+                    name: player.summonerId,
+                    rank: player.tier[0].toUpperCase() + player.tier.slice(1).toLowerCase() + " " + player.rank,
+                    winRate: player.wins + " | " + player.losses,
+                    leaguePoints: player.leaguePoints,
+                    hotStreak: player.hotStreak ? '🔥' : '',
+                    freshBlood: player.freshBlood ? '🐣' : '',
+                }));
+                setRows(playerRows);
+            }
+        
     }, [filters]);
 
 
     return (
-        <div id="leaderboard-container">
-            <div id="filters">
-                <div id="queue-buttons">
-                    <Button value="flex" onClick={changeQueue} className={`queue-button${filters.queue === "flex" ? " selected" : " unselected"}`}>Ranked Flex</Button>
-                    <Button value="solo" onClick={changeQueue} className={`queue-button${filters.queue === "solo" ? " selected" : " unselected"}`}>Ranked Solo</Button>
-                </div>
-                <div id="leaderboard-and-filters">
+        <>
+            <div id="leaderboard-title" className="title">
+
+            </div>
+            <div id="leaderboard-body">
+                <div id="filters">
+                    <div id="queue-buttons">
+                        <Button value="flex" onClick={changeQueue} className={`queue-button${filters.queue === "flex" ? " selected" : " unselected"}`}>Ranked Flex</Button>
+                        <Button value="solo" onClick={changeQueue} className={`queue-button${filters.queue === "solo" ? " selected" : " unselected"}`}>Ranked Solo</Button>
+                    </div>
                     <div id="filter-dropdown-group">
                         <Box sx={{ width: 300}} className="filter-dropdown">
                             <FormControl fullWidth>
@@ -126,32 +263,85 @@ function Leaderboard() {
                         </Box>
                         {data && data.length > 0 ? (<p id="last-update">Last Update: {new Date(lastUpdated).toLocaleString()}</p>) : (<p id="last-update">Last Update: N/A</p>)}
                     </div>
+                </div>
+                <div id="leaderboard">
                     <div id="user-list">
                         {loading ? (
                             <p>Loading leaderboard...</p>
                         ) : (
-                            <>
-                                
-                                {data && data.length > 0 ? (
-                                    data.map((player, index) => (
-                                        <div key={index} className="player">
-                                            <strong>{player.summonerId}</strong><br />
-                                            Rank: {player.tier[0].toUpperCase() + player.tier.slice(1).toLowerCase()} {player.rank}<br />
-                                            Wins: {player.wins} | Losses: {player.losses}<br />
-                                            League Points: {player.leaguePoints}<br />
-                                            {player.hotStreak ? 'Hot Streak' : ''}
-                                            {player.freshBlood ? 'New Player' : ''}
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div>No players found for the selected filters.</div>
-                                )}
-                            </>
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Player Name</TableCell>
+                                        <TableCell>Rank</TableCell>
+                                        <TableCell>Wins | Losses</TableCell>
+                                        <TableCell>LP</TableCell>
+                                        <TableCell>Hot Streak</TableCell>
+                                        <TableCell>Fresh Blood</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {(rowsPerPage > 0
+                                    ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    : rows
+                                    ).map((row) => (
+                                    <TableRow key={row.name}>
+                                        <TableCell component="th" scope="row">
+                                        {row.name}
+                                        </TableCell>
+                                        <TableCell style={{ width: 160 }} align="right">
+                                        {row.rank}
+                                        </TableCell>
+                                        <TableCell style={{ width: 160 }} align="right">
+                                        {row.winRate}
+                                        </TableCell>
+                                        <TableCell style={{ width: 160 }} align="right">
+                                        {row.leaguePoints}
+                                        </TableCell>
+                                        <TableCell style={{ width: 160 }} align="right">
+                                        {row.hotStreak}
+                                        </TableCell>
+                                        <TableCell style={{ width: 160 }} align="right">
+                                        {row.freshBlood}
+                                        </TableCell>
+                                    </TableRow>
+                                    ))}
+                                    {emptyRows > 0 && (
+                                    <TableRow style={{ height: 53 * emptyRows }}>
+                                        <TableCell colSpan={6} />
+                                    </TableRow>
+                                    )}
+                                </TableBody>
+                                <TableFooter>
+                                    <TableRow>
+                                    <TablePagination
+                                        rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                                        colSpan={3}
+                                        count={rows.length}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        slotProps={{
+                                        select: {
+                                            inputProps: {
+                                            'aria-label': 'rows per page',
+                                            },
+                                            native: true,
+                                        },
+                                        }}
+                                        onPageChange={handleChangePage}
+                                        onRowsPerPageChange={handleChangeRowsPerPage}
+                                        ActionsComponent={TablePaginationActions}
+                                    />
+                                    </TableRow>
+                                </TableFooter>
+                            </Table>
+                        </TableContainer>
                         )}
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

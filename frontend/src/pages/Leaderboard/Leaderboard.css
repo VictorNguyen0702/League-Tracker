@@ -1,7 +1,10 @@
-
+#leaderboard-body {
+    display: flex;
+}
 #queue-buttons {
     display: flex;
     gap: 30px;
+    width: 350px;
     padding: 50px 50px 0 50px;
 }
 
@@ -75,5 +78,5 @@
 }
 
 #user-list {
-    padding: 50px 100px;
+    padding: 50px 50px 50px 0px;
 }
