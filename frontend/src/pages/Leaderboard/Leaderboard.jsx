@@ -23,6 +23,8 @@ import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
+import Typography from '@mui/material/Typography';
+
 import './Leaderboard.css'
 
 function TablePaginationActions(props) {
@@ -199,8 +201,8 @@ function Leaderboard() {
 
     return (
         <>
-            <div id="leaderboard-title" className="title">
-
+            <div id="leaderboard-title-div" className="title-div">
+              <Typography variant="h4" component="h1" id="title">Rank Leaderboard</Typography>
             </div>
             <div id="leaderboard-body">
                 <div id="filters">

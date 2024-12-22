@@ -1,6 +1,11 @@
+#title {
+    padding-top: 30px;
+}
+
 #leaderboard-body {
     display: flex;
 }
+
 #queue-buttons {
     display: flex;
     gap: 30px;
