@@ -189,6 +189,7 @@ function Leaderboard() {
                     leaguePoints: player.leaguePoints,
                     hotStreak: player.hotStreak ? '🔥' : '',
                     freshBlood: player.freshBlood ? '🐣' : '',
+                    veteran: player.veteran ? '🧙‍♂️' : '',
                 }));
                 setRows(playerRows);
             }
@@ -279,6 +280,7 @@ function Leaderboard() {
                                         <TableCell>LP</TableCell>
                                         <TableCell>Hot Streak</TableCell>
                                         <TableCell>Fresh Blood</TableCell>
+                                        <TableCell>Veteran</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -304,6 +306,9 @@ function Leaderboard() {
                                         </TableCell>
                                         <TableCell style={{ width: 160 }} align="right">
                                         {row.freshBlood}
+                                        </TableCell>
+                                        <TableCell style={{ width: 160 }} align="right">
+                                        {row.veteran}
                                         </TableCell>
                                     </TableRow>
                                     ))}
