@@ -167,14 +167,26 @@ function Leaderboard() {
             setData([]);
             setLastUpdated(null);
             setLoading(false);
-
+            return
         }
         setLoading(true);
         axios.get(`http://127.0.0.1:8000/leaderboard/${filters.region}/${filters.queue}/${filters.tier}/${filters.division}`)
             .then((response) => {
-                setData(response.data.users);
-                setLastUpdated(response.data.last_updated);         
-                })
+                if (response.data.users && response.data.users.length > 0) {
+                    setData(response.data.users);
+                    setLastUpdated(response.data.last_updated);  
+                } else {
+                    axios.post(`http://127.0.0.1:8000/leaderboard/${filters.region}/${filters.queue}/${filters.tier}/${filters.division}`)
+                    .then((postResponse) => {
+                        console.log(postResponse)
+                        setData(postResponse.data.users);
+                        setLastUpdated(postResponse.data.last_updated);
+                    })
+                    .catch((error) => {
+                        console.error("Error sending POST request:", error);
+                    });
+                }
+            })
             .catch((error) => {
                 console.error("Error fetching data:", error);
             })

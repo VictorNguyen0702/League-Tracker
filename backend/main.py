@@ -57,3 +57,5 @@ def download_division_leaderboard(region: str, queue: str, tier: str, division: 
 
     division_dict = mongo.download_division_leaderboard(region_param, queue_param, tier, division)
     
+    return division_dict
+    
