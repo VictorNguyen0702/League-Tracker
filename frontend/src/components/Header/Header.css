@@ -1,6 +1,10 @@
+:root {
+    --header-color: #3e3e3e5f
+}
+
 #header {
     display: flex;
-    background-color: #3e3e3e5f;
+    background-color: var(--header-color);
     padding: 0;
     justify-content: space-between;
     align-items: center; /* Vertically centers items in the header */

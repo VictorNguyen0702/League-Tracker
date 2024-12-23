@@ -8,6 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import PropTypes from 'prop-types';
+import { Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
@@ -166,7 +167,7 @@ function Leaderboard() {
             setData([]);
             setLastUpdated(null);
             setLoading(false);
-            return;
+
         }
         setLoading(true);
         axios.get(`http://127.0.0.1:8000/leaderboard/${filters.region}/${filters.queue}/${filters.tier}/${filters.division}`)
@@ -180,27 +181,29 @@ function Leaderboard() {
             .finally(() => {
                 setLoading(false);
             });
-            if (data && data.length > 0) {
-                // Map data into row structure
-                const playerRows = data.map((player) => ({
-                    name: player.summonerId,
-                    rank: player.tier[0].toUpperCase() + player.tier.slice(1).toLowerCase() + " " + player.rank,
-                    winRate: player.wins + " | " + player.losses,
-                    leaguePoints: player.leaguePoints,
-                    hotStreak: player.hotStreak ? '🔥' : '',
-                    freshBlood: player.freshBlood ? '🐣' : '',
-                    veteran: player.veteran ? '🧙‍♂️' : '',
-                }));
-                setRows(playerRows);
-            }
-        
+
     }, [filters]);
+
+    React.useEffect(() => {
+        if (data && data.length > 0) {
+            const playerRows = data.map((player) => ({
+                name: player.summonerId,
+                rank: player.tier[0].toUpperCase() + player.tier.slice(1).toLowerCase() + " " + player.rank,
+                winRate: player.wins + " | " + player.losses,
+                leaguePoints: player.leaguePoints,
+                hotStreak: player.hotStreak ? '🔥' : '',
+                freshBlood: player.freshBlood ? '🐣' : '',
+                veteran: player.veteran ? '🧙‍♂️' : '',
+            }));
+            setRows(playerRows);
+        }
+    }, [data]); // Only run this effect when the data changes
 
 
     return (
         <>
             <div id="leaderboard-title" className="title">
-
+                <Typography id="title" variant="h3">Rank Leaderboard</Typography>
             </div>
             <div id="leaderboard-body">
                 <div id="filters">
@@ -270,17 +273,17 @@ function Leaderboard() {
                         {loading ? (
                             <p>Loading leaderboard...</p>
                         ) : (
-                        <TableContainer component={Paper}>
-                            <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+                        <TableContainer id="leaderboard-table-container" component={Paper}>
+                            <Table id="leaderboard-table" >
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Player Name</TableCell>
-                                        <TableCell>Rank</TableCell>
-                                        <TableCell>Wins | Losses</TableCell>
-                                        <TableCell>LP</TableCell>
-                                        <TableCell>Hot Streak</TableCell>
-                                        <TableCell>Fresh Blood</TableCell>
-                                        <TableCell>Veteran</TableCell>
+                                        <TableCell id="player-name-label" className="table-column-label">Player Name</TableCell>
+                                        <TableCell id="rank-label" className="table-column-label">Rank</TableCell>
+                                        <TableCell id="winrate-label" className="table-column-label">Wins | Losses</TableCell>
+                                        <TableCell id="lp-label" className="table-column-label">LP</TableCell>
+                                        <TableCell id="hot-streak-label" className="table-column-label">Hot Streak</TableCell>
+                                        <TableCell id="fresh-blood-label" className="table-column-label">Fresh Blood</TableCell>
+                                        <TableCell id="veteran-label" className="table-column-label">Veteran</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -320,8 +323,8 @@ function Leaderboard() {
                                 </TableBody>
                                 <TableFooter>
                                     <TableRow>
-                                    <TablePagination
-                                        rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                                    <TablePagination id="table-pagination"
+                                        rowsPerPageOptions={[10, 25, { label: 'All', value: -1 }]}
                                         colSpan={3}
                                         count={rows.length}
                                         rowsPerPage={rowsPerPage}

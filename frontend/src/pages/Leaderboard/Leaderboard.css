@@ -1,3 +1,15 @@
+:root {
+    --label-color: #9d9d9d;
+    --light-text-color: rgb(150, 150, 150);
+    --darl-text-color: rgb(75, 75, 75);
+    --light-theme-color: rgb(89, 89, 89);
+    --dark-theme-color: rgb(62, 62, 62);
+}
+
+#title {
+    padding-top: 30px;
+}
+
 #leaderboard-body {
     display: flex;
 }
@@ -9,61 +21,62 @@
 }
 
 .queue-button.unselected {
-    background-color: rgb(62, 62, 62);
-    color: white;
+    background-color: var(--dark-theme-color);
+    color: var(--label-color);
     padding: 10px 20px;
     border-radius: 12px;
 }
 
 .queue-button.selected {
-    background-color: rgb(89, 89, 89);
-    color: white;
+    background-color: var(--light-theme-color);
+    color: var(--label-color);
     padding: 10px 20px;
     border-radius: 12px;
 }
 
 .filter-dropdown {
-    background-color: rgb(62, 62, 62);
+    background-color: var(--dark-theme-color);
     margin: 10px 0;
     border-radius: 12px; 
     color: white;
 }
 
 #region-select {
-    color: rgb(221, 220, 220);
+    color: var(--label-color);
 }
 
 #tier-select {
-    color: rgb(221, 220, 220);
+    color: var(--label-color);
 }
 
 #division-select {
-    color: rgb(221, 220, 220);
+    color: var(--label-color);
 }
 
 #region-select-label {
-    color: rgb(221, 220, 220);
+    color: var(--label-color);
 }
 
 #tier-select-label {
-    color: rgb(221, 220, 220);
+    color: var(--label-color);
 }
 
 #division-select-label {
-    color: rgb(221, 220, 220);
+    color: var(--label-color);
 }
 
 #filter-dropdown-group {
     padding: 50px;
 
 }
+
 .filter-select.Mui-focused.MuiOutlinedInput-notchedOutline {
     border-color: black;
     color: white;
 }
 
 .filter-dropdown.MuiOutlinedInput-notchedOutline {
-    background-color: rgb(62, 62, 62);
+    background-color: var(--dark-theme-color);
     border-radius: 12px; 
 }
 
@@ -79,4 +92,49 @@
 
 #user-list {
     padding: 50px 50px 50px 0px;
+}
+
+#leaderboard-table-container {
+    border-radius: 12px;
+    background-color: var(--light-theme-color);
+    border-color: var(--light-theme-color);
+    width: 1000px;
+}
+
+#player-name-label {
+    width: 15%;
+    color: var(--light-text-color);
+}
+#rank-label {
+    width: 15%;
+    color: var(--light-text-color);
+}
+#winrate-label {
+    width: 15%;
+    color: var(--light-text-color);
+}
+#lp-label {
+    width: 10%;
+    color: var(--light-text-color);
+}
+#hot-streak-label {
+    width: 15%;
+    color: var(--light-text-color);
+}
+#fresh-blood-label {
+    width: 15%;
+    color: var(--light-text-color);
+}
+#veteran-label {
+    width: 15%;
+    color: var(--light-text-color)
+}
+
+#table-pagination {
+    color: var(--dark-text-color)
+}
+
+.table-column-label {
+    background-color: var(--dark-theme-color);
+
 }
