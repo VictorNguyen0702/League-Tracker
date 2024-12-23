@@ -1,29 +1,16 @@
 import * as React from 'react';
 import axios from 'axios';
 
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Button from '@mui/material/Button';
-import PropTypes from 'prop-types';
-import { Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableFooter from '@mui/material/TableFooter';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import IconButton from '@mui/material/IconButton';
+import { Box, InputLabel, MenuItem, FormControl, Select, Button, Typography, 
+         Table, TableHead, TableBody, TableCell, TableContainer, TableFooter, TablePagination, 
+         TableRow, Paper, IconButton, useTheme } from '@mui/material';
+
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import LastPageIcon from '@mui/icons-material/LastPage';
+import PropTypes from 'prop-types';
+  
 import './Leaderboard.css'
 
 function TablePaginationActions(props) {
