@@ -3,11 +3,14 @@ from fastapi.middleware.cors import CORSMiddleware
 import mongo
 import api_calls
 from datetime import datetime
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["http://localhost:5173"],  # Replace "*" with your React app's domain in production
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -42,12 +45,18 @@ queue_dict = {
 
 
 @app.get("/leaderboard/{region}/{queue}/{tier}/{division}")
-def get_leaderboard(region: str, queue: str, tier: str, division: str):
+def get_division_leaderboard(region: str, queue: str, tier: str, division: str):
     region_param, queue_param = region_dict[region.upper()], queue_dict[queue.upper()]
 
-    division_dict = mongo.get_leaderboard(region_param, queue_param, tier, division)
-    if not division_dict or (datetime.now() - division_dict.get("last_updated")).total_seconds() / 60 > 15:
-        division_dict = mongo.download_division(region_param, queue_param, tier, division)
+    division_dict = mongo.get_division_leaderboard(region_param, queue_param, tier, division)
     
     return division_dict
-        
+    
+@app.post("/leaderboard/{region}/{queue}/{tier}/{division}")
+def download_division_leaderboard(region: str, queue: str, tier: str, division: str):
+    region_param, queue_param = region_dict[region.upper()], queue_dict[queue.upper()]
+
+    division_dict = mongo.download_division_leaderboard(region_param, queue_param, tier, division)
+    
+    return division_dict
+    

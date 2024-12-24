@@ -28,7 +28,7 @@ def get_division_leaderboard(region: str, queue: str, tier: str, division: str) 
         return {}
 
 
-def download_division(region: str, queue: str, tier: str, division: str) -> dict:
+def download_division_leaderboard(region: str, queue: str, tier: str, division: str) -> dict:
     leaderboard = client["ranks"]["leaderboard"]
 
     new_users = api_calls.get_league_by_queue(region, queue, tier, division)
@@ -42,5 +42,5 @@ def download_division(region: str, queue: str, tier: str, division: str) -> dict
         },
         upsert = True
     )
-    return {"last_updated": download_time,
-            "users": new_users}
+
+    return {"users": new_users, "last_updated": download_time}
