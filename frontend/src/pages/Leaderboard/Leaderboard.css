@@ -1,10 +1,4 @@
-:root {
-    --label-color: #9d9d9d;
-    --light-text-color: rgb(150, 150, 150);
-    --dark-text-color: rgb(75, 75, 75);
-    --light-theme-color: rgb(89, 89, 89);
-    --dark-theme-color: rgb(62, 62, 62);
-}
+@import '../../assets/styles.css';
 
 #title {
     padding-top: 30px;
@@ -131,6 +125,8 @@
 #hot-streak-label {
     width: 15%;
     color: var(--light-text-color);
+    border-color: var(--light-theme-color);
+
 }
 #fresh-blood-label {
     width: 15%;
@@ -146,7 +142,15 @@
     background-color: var(--dark-theme-color);
 }
 
+.MuiTableCell-root {
+    border-color: var(--light-theme-color) !important;
+}
+
 .table-column-label {
     background-color: var(--dark-theme-color);
+    border-color: var(--dark-theme-color) !important;
+}
 
+.table-pagination {
+    border-color: var(--dark-theme-color) !important;
 }

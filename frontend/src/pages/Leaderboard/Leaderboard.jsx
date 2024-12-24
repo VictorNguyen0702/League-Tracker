@@ -318,7 +318,7 @@ function Leaderboard() {
                                     ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     : rows
                                     ).map((row) => (
-                                    <TableRow key={row.name}>
+                                    <TableRow key={row.name} id="user-row">
                                         <TableCell component="th" scope="row">
                                         {row.name}
                                         </TableCell>
