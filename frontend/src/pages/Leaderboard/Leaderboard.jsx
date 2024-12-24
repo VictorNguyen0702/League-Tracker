@@ -148,6 +148,28 @@ function Leaderboard() {
       setPage(0);
     };
 
+    function refreshData() {
+        const { region, queue, tier, division } = filters;
+        if (region === "" || queue === ""  || tier === ""  || division === "" ) {
+            setData([]);
+            setLastUpdated(null);
+            setLoading(false);
+            return
+        }
+        setLoading(true);
+        axios.post(`http://127.0.0.1:8000/leaderboard/${filters.region}/${filters.queue}/${filters.tier}/${filters.division}`)
+        .then((postResponse) => {
+            setData(postResponse.data.users);
+            setLastUpdated(postResponse.data.last_updated);
+        })
+        .catch((error) => {
+            console.error("Error sending POST request:", error);
+        })
+        .finally(() => {
+            setLoading(false);
+        });;
+    }
+
     React.useEffect(() => {
         const { region, queue, tier, division } = filters;
         if (region === "" || queue === ""  || tier === ""  || division === "" ) {
@@ -165,13 +187,16 @@ function Leaderboard() {
                 } else {
                     axios.post(`http://127.0.0.1:8000/leaderboard/${filters.region}/${filters.queue}/${filters.tier}/${filters.division}`)
                     .then((postResponse) => {
-                        console.log(postResponse)
+                        console.log(postResponse.data)
                         setData(postResponse.data.users);
                         setLastUpdated(postResponse.data.last_updated);
                     })
                     .catch((error) => {
                         console.error("Error sending POST request:", error);
-                    });
+                    })
+                    .finally(() => {
+                        setLoading(false);
+                    });;
                 }
             })
             .catch((error) => {
@@ -264,7 +289,10 @@ function Leaderboard() {
                                 </Select>
                             </FormControl>
                         </Box>
-                        {data && data.length > 0 ? (<p id="last-update">Last Update: {new Date(lastUpdated).toLocaleString()}</p>) : (<p id="last-update">Last Update: N/A</p>)}
+                        <div>
+                            {data && data.length > 0 ? (<p id="last-update">Last Update: {new Date(lastUpdated).toLocaleString()}</p>) : (<p id="last-update">Last Update: N/A</p>)}
+                            <Button onClick={refreshData}>Refresh</Button>
+                        </div>
                     </div>
                 </div>
                 <div id="leaderboard">

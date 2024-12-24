@@ -42,3 +42,5 @@ def download_division_leaderboard(region: str, queue: str, tier: str, division: 
         },
         upsert = True
     )
+
+    return {"users": new_users, "last_updated": download_time}
