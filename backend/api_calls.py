@@ -82,8 +82,31 @@ def get_league_entries_by_name(riot_id: str, region: str):
         return None
 
 
-def get_match_history(puiid: str) -> list[str]:
+def get_match_history(riot_id: str, route: str, start = 0, count = 20) -> list[str]:
     """
-    Returns a list of matchids based on puuid
+    Returns a list of matchids based on riot id
     """
-    pass
+    riot_account = get_riot_account(riot_id)
+    if riot_account is None:
+        return
+    puu_id = riot_account['puuid']
+    url = f"https://{route}.api.riotgames.com/lol/match/v5/matches/by-puuid/{puu_id}/ids?start={start}&count={count}"
+    response = requests.get(url, headers = {"X-Riot-Token": API_key})
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Error getting summoner ID: {response.status_code}")
+        return None
+    
+def get_match_data(matchid: str, route: str):
+    """
+    Returns data about a match based on match id
+    """
+    url = f"https://{route}.api.riotgames.com/lol/match/v5/matches/{matchid}"
+    response = requests.get(url, headers = {"X-Riot-Token": API_key})
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"Error getting summoner ID: {response.status_code}")
+        return None
+    
