@@ -1,13 +1,11 @@
-:root {
-    --header-color: #3e3e3e5f
-}
+@import '../../assets/styles.css';
 
 #header {
     display: flex;
     background-color: var(--header-color);
     padding: 0;
     justify-content: space-between;
-    align-items: center; /* Vertically centers items in the header */
+    align-items: center; 
 }
 
 .header-link {
@@ -23,7 +21,7 @@ nav {
 #user-page {
     display: flex;
     align-items: center;
-    height: 60px; /* Set a height for the div */
+    height: 60px;
 }
 
 .user-link {
@@ -31,6 +29,6 @@ nav {
 }
 
 .profile-image {
-    max-width: 40px; /* Optional: Limit the image size */
-    height: auto; /* Maintain aspect ratio */
+    max-width: 40px; 
+    height: auto; 
 }
