@@ -1,7 +1,7 @@
 :root {
     --label-color: #9d9d9d;
     --light-text-color: rgb(150, 150, 150);
-    --darl-text-color: rgb(75, 75, 75);
+    --dark-text-color: rgb(75, 75, 75);
     --light-theme-color: rgb(89, 89, 89);
     --dark-theme-color: rgb(62, 62, 62);
 }
@@ -80,11 +80,22 @@
     border-radius: 12px; 
 }
 
+#update-div {
+    text-align: left;
+}
+
 #last-update {
     text-align: left;
     padding-top: 50px;
+    color: var(--light-text-color);
 }
 
+#refresh-button {
+    background-color: var(--dark-theme-color);
+    color: var(--label-color);
+    padding: 10px 20px;
+    border-radius: 12px;
+}
 
 #leaderboard-and-filters {
     display: flex;
@@ -131,7 +142,8 @@
 }
 
 #table-pagination {
-    color: var(--dark-text-color)
+    color: var(--light-text-color);
+    background-color: var(--dark-theme-color);
 }
 
 .table-column-label {

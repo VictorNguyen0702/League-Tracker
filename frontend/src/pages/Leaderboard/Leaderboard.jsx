@@ -289,9 +289,9 @@ function Leaderboard() {
                                 </Select>
                             </FormControl>
                         </Box>
-                        <div>
+                        <div id="update-div">
                             {data && data.length > 0 ? (<p id="last-update">Last Update: {new Date(lastUpdated).toLocaleString()}</p>) : (<p id="last-update">Last Update: N/A</p>)}
-                            <Button onClick={refreshData}>Refresh</Button>
+                            <Button id="refresh-button" onClick={refreshData}>Refresh</Button>
                         </div>
                     </div>
                 </div>
@@ -350,24 +350,24 @@ function Leaderboard() {
                                 </TableBody>
                                 <TableFooter>
                                     <TableRow>
-                                    <TablePagination id="table-pagination"
-                                        rowsPerPageOptions={[10, 25, { label: 'All', value: -1 }]}
-                                        colSpan={3}
-                                        count={rows.length}
-                                        rowsPerPage={rowsPerPage}
-                                        page={page}
-                                        slotProps={{
-                                        select: {
-                                            inputProps: {
-                                            'aria-label': 'rows per page',
+                                        <TablePagination id="table-pagination"
+                                            rowsPerPageOptions={[10, 25, { label: 'All', value: -1 }]}
+                                            colSpan={3}
+                                            count={rows.length}
+                                            rowsPerPage={rowsPerPage}
+                                            page={page}
+                                            slotProps={{
+                                            select: {
+                                                inputProps: {
+                                                'aria-label': 'rows per page',
+                                                },
+                                                native: true,
                                             },
-                                            native: true,
-                                        },
-                                        }}
-                                        onPageChange={handleChangePage}
-                                        onRowsPerPageChange={handleChangeRowsPerPage}
-                                        ActionsComponent={TablePaginationActions}
-                                    />
+                                            }}
+                                            onPageChange={handleChangePage}
+                                            onRowsPerPageChange={handleChangeRowsPerPage}
+                                            ActionsComponent={TablePaginationActions}
+                                        />
                                     </TableRow>
                                 </TableFooter>
                             </Table>
