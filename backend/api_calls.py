@@ -7,7 +7,6 @@ load_dotenv()
 API_key = os.getenv("RIOT_API_KEY")
 
 
-
 # --------------- Helper Functions for puu id and summoner id --------------- #
 
 
@@ -45,7 +44,9 @@ def get_encrypted_summoner_id(riot_id: str, region: str) -> str:
         print(f"Error getting summoner ID: {response.status_code}")
         return None
 
+
 # --------------------- Function to Return League Queue --------------------- #
+
 
 def get_league_by_queue(region: str, queue: str, tier: str, division: str) -> dict | None:
     """
@@ -80,3 +81,9 @@ def get_league_entries_by_name(riot_id: str, region: str):
         print(f"Error getting summoner ID: {response.status_code}")
         return None
 
+
+def get_match_history(puiid: str) -> list[str]:
+    """
+    Returns a list of matchids based on puuid
+    """
+    pass

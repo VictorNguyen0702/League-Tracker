@@ -107,35 +107,32 @@
 }
 
 #player-name-label {
-    width: 15%;
+    width: 20%;
     color: var(--light-text-color);
 }
 #rank-label {
-    width: 15%;
+    width: 16%;
     color: var(--light-text-color);
 }
 #winrate-label {
-    width: 15%;
+    width: 16%;
     color: var(--light-text-color);
 }
 #lp-label {
-    width: 10%;
+    width: 16%;
     color: var(--light-text-color);
 }
 #hot-streak-label {
-    width: 15%;
+    width: 16%;
     color: var(--light-text-color);
     border-color: var(--light-theme-color);
 
 }
 #fresh-blood-label {
-    width: 15%;
+    width: 16%;
     color: var(--light-text-color);
 }
-#veteran-label {
-    width: 15%;
-    color: var(--light-text-color)
-}
+
 
 #table-pagination {
     color: var(--light-text-color);

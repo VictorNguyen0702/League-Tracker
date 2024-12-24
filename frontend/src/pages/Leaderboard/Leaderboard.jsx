@@ -217,7 +217,6 @@ function Leaderboard() {
                 leaguePoints: player.leaguePoints,
                 hotStreak: player.hotStreak ? '🔥' : '',
                 freshBlood: player.freshBlood ? '🐣' : '',
-                veteran: player.veteran ? '🧙‍♂️' : '',
             }));
             setRows(playerRows);
         }
@@ -253,9 +252,11 @@ function Leaderboard() {
                                     <MenuItem value="JP">Japan (JP)</MenuItem>
                                     <MenuItem value="TW">Taiwan (TW)</MenuItem>
                                     <MenuItem value="SG">Singapore (SG)</MenuItem>
+                                    <MenuItem value="ME">Middle East (ME)</MenuItem>
+                                    <MenuItem value="KR">Korea (KR)</MenuItem>
+                                    <MenuItem value="VN">Vietnam (VN)</MenuItem>
                                     <MenuItem value="TH">Thailand (TH)</MenuItem>
                                     <MenuItem value="PH">Philippines (PH)</MenuItem>
-                                    <MenuItem value="ME">Middle East (ME)</MenuItem>
                                 </Select>
                             </FormControl>
                         </Box>
@@ -310,7 +311,6 @@ function Leaderboard() {
                                         <TableCell id="lp-label" className="table-column-label">LP</TableCell>
                                         <TableCell id="hot-streak-label" className="table-column-label">Hot Streak</TableCell>
                                         <TableCell id="fresh-blood-label" className="table-column-label">Fresh Blood</TableCell>
-                                        <TableCell id="veteran-label" className="table-column-label">Veteran</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>

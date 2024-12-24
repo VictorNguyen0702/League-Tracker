@@ -19,26 +19,35 @@ app.add_middleware(
 
 
 region_dict = {
-    "NA": "na1",
-    "EUW": "euw1",
-    "EUNE": "eun1",
-    "OCE": "oc1",
-    "RU": "ru",
-    "TR": "tr1",
     "BR": "br1",
+    "EUNE": "eun1",
+    "EUW": "euw1",
+    "JP": "jp1",
+    "KR": "kr",
     "LAN": "la1",
     "LAS": "la2",
-    "JP": "jp1",
-    "TW": "tw1",
+    "ME": "me1",
+    "NA": "na1",
+    "OCE": "oc1",
+    "PH": "ph2",
+    "RU": "ru",
     "SG": "sg2",
     "TH": "th2",
-    "PH": "ph2",
-    "ME": "mea1"
+    "TR": "tr1",
+    "TW": "tw1",
+    "VN": "vn2"
 }
 
 queue_dict = {
     "SOLO": "RANKED_SOLO_5x5",
     "FLEX": "RANKED_FLEX_SR"
+}
+
+routing_dict = {
+    "americas": ["NA", "BR", "LAN", "LAS"],
+    "asia": ["KR", "JP"],
+    "europe": ["EUNE", "EUW", "ME", "TR", "RU"],
+    "sea": ["OCE", "PH", "SG", "TH", "TW", "VN"]
 }
 
 # ---------------------- API Endpoints for Leaderboard ---------------------- #
