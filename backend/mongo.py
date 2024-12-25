@@ -46,7 +46,7 @@ def download_division_leaderboard(region: str, queue: str, tier: str, division: 
     return {"users": new_users, "last_updated": download_time}
 
 def get_match_history(riot_id: str, route: str, start = 0, count = 20) -> list[str]:
-    match_history = client["ranks"]["match_history"]
+    match_history = client["match_database"]["match_history"]
 
     result = match_history.find_one(
     {"route": route,
@@ -59,7 +59,7 @@ def get_match_history(riot_id: str, route: str, start = 0, count = 20) -> list[s
         return {}
 
 def download_match_history(riot_id: str, route: str, start = 0, count = 20) -> list[str]:
-    match_history = client["ranks"]["match_history"]
+    match_history = client["match_database"]["match_history"]
 
     match_id_list = api_calls.get_match_history(riot_id, route, start, count)
     download_time = datetime.now()
@@ -75,4 +75,5 @@ def download_match_history(riot_id: str, route: str, start = 0, count = 20) -> l
 
     return {"match_history": match_id_list, "last_updated": download_time}
 
-print(get_match_history("Vickles#OCE", "SEA"))
+#download_match_history("Vickles#OCE", "SEA")
+#print(get_match_history("Vickles#OCE", "SEA"))
