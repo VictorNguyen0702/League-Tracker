@@ -53,7 +53,7 @@ def get_match_history(riot_id: str, route: str, start = 0, count = 20) -> list[s
      f"{riot_id}": {"$exists": True}})
     
     if result:
-        match_history = result.get(f"{riot_id}")[start:start + count]
+        match_history = {"match_history": result.get(f"{riot_id}").get("match_history")[start:start + count], "last_updated": result.get(f"{riot_id}").get("last_updated")}
         return match_history
     else:
         return {}
@@ -74,3 +74,5 @@ def download_match_history(riot_id: str, route: str, start = 0, count = 20) -> l
     )
 
     return {"match_history": match_id_list, "last_updated": download_time}
+
+print(get_match_history("Vickles#OCE", "SEA"))

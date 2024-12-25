@@ -134,4 +134,4 @@ def get_match_data(matchid: str, route: str):
     
     return return_dict
 
-print(get_match_data("OC1_651684364", "SEA"))
+#print(get_match_data("OC1_651684364", "SEA"))
