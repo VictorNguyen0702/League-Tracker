@@ -44,3 +44,33 @@ def download_division_leaderboard(region: str, queue: str, tier: str, division: 
     )
 
     return {"users": new_users, "last_updated": download_time}
+
+def get_match_history(riot_id: str, route: str, start = 0, count = 20) -> list[str]:
+    match_history = client["ranks"]["match_history"]
+
+    result = match_history.find_one(
+    {"route": route,
+     f"{riot_id}": {"$exists": True}})
+    
+    if result:
+        match_history = result.get(f"{riot_id}")[start:start + count]
+        return match_history
+    else:
+        return {}
+
+def download_match_history(riot_id: str, route: str, start = 0, count = 20) -> list[str]:
+    match_history = client["ranks"]["match_history"]
+
+    match_id_list = api_calls.get_match_history(riot_id, route, start, count)
+    download_time = datetime.now()
+    match_history.update_one(
+    {"route": route},
+        {"$set": {
+            f"{riot_id}.match_history": match_id_list,
+            f"{riot_id}.last_updated": download_time
+            }
+        },
+        upsert = True
+    )
+
+    return {"match_history": match_id_list, "last_updated": download_time}
