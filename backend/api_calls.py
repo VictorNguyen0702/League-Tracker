@@ -105,8 +105,33 @@ def get_match_data(matchid: str, route: str):
     url = f"https://{route}.api.riotgames.com/lol/match/v5/matches/{matchid}"
     response = requests.get(url, headers = {"X-Riot-Token": API_key})
     if response.status_code == 200:
-        return response.json()
+        response = response.json()
     else:
         print(f"Error getting summoner ID: {response.status_code}")
         return None
     
+    match_info = response["info"]
+
+    queue_id = match_info["queueId"]
+    game_duration = match_info["gameDuration"]
+    teams = match_info["teams"]
+    players = match_info["participants"]
+    
+    for team in teams:
+        if team.get("teamId") == 100:
+            blue_side_bans = [ban.get("championId", []) for ban in team.get("bans")]
+        else:
+            red_side_bans = [ban.get("championId", []) for ban in team.get("bans")]
+
+    return_dict = {
+        "queue_id": queue_id,
+        "game_duration": game_duration,
+        "teams": teams,
+        "blue_side_bans": blue_side_bans,
+        "red_side_bans": red_side_bans,
+        "players": players
+    }
+    
+    return return_dict
+
+print(get_match_data("OC1_651684364", "SEA"))

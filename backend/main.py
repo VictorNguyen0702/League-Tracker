@@ -50,6 +50,21 @@ routing_dict = {
     "sea": ["OCE", "PH", "SG", "TH", "TW", "VN"]
 }
 
+queue_ids = {
+    65: "ARAM",
+    450: "ARAM",
+    1000: "ARAM",
+    400: "Draft Normals",
+    420: "Ranked Solo/Duo",
+    440: "Ranked Flex",
+    430: "Quickplay (Blind Pick)",
+    76: "URF (Ultra Rapid Fire)",
+    900: "URF (Ultra Rapid Fire)",
+    1010: "URF (Ultra Rapid Fire)",
+    1900: "URF (Ultra Rapid Fire)",
+    1300: "Ultimate Spellbook"
+}
+
 # ---------------------- API Endpoints for Leaderboard ---------------------- #
 
 
