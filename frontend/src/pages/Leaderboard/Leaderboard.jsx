@@ -201,7 +201,6 @@ function Leaderboard() {
             .finally(() => {
                 setLoading(false);
             });
-
     }, [filters]);
 
     React.useEffect(() => {

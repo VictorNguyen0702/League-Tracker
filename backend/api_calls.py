@@ -82,7 +82,7 @@ def get_league_entries_by_name(riot_id: str, region: str):
         return None
 
 
-def get_match_history(riot_id: str, route: str, start = 0, count = 20) -> list[str]:
+def get_match_history(riot_id: str, route: str, start = 0, count = 15) -> list[str]:
     """
     Returns a list of matchids based on riot id
     """

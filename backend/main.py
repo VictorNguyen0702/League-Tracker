@@ -83,4 +83,25 @@ def download_division_leaderboard(region: str, queue: str, tier: str, division: 
     division_dict = mongo.download_division_leaderboard(region_param, queue_param, tier, division)
     
     return division_dict
+
+@app.get("/profile/{region}/{riot_id}")
+def get_match_history(riot_id: str, region: str):
+    for key in routing_dict.keys():
+        if region in routing_dict[key]:
+            route = key
+            break
     
+    match_history_dict = mongo.get_match_history(riot_id, route)
+
+    return match_history_dict
+
+@app.post("/profile/{region}/{riot_id}")
+def get_match_history(riot_id: str, region: str):
+    for key in routing_dict.keys():
+        if region in routing_dict[key]:
+            route = key
+            break
+    
+    match_history_dict = mongo.download_match_history(riot_id, route)
+
+    return match_history_dict
