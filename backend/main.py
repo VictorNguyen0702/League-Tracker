@@ -65,6 +65,14 @@ queue_ids = {
     1300: "Ultimate Spellbook"
 }
 
+
+# --------------------- Helper Functions for Match Data --------------------- #
+
+
+def get_match_stats(match_history_dict: dict) -> dict:
+    pass
+
+
 # ---------------------- API Endpoints for Leaderboard ---------------------- #
 
 
