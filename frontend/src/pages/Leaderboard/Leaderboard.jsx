@@ -73,10 +73,7 @@ function TablePaginationActions(props) {
     page: PropTypes.number.isRequired,
     rowsPerPage: PropTypes.number.isRequired,
   };
-  
-  function createData(name, calories, fat) {
-    return { name, calories, fat };
-  }
+
 
 function Leaderboard() {
 
@@ -86,7 +83,6 @@ function Leaderboard() {
         tier: '',
         division: ''
     });
-    const [queue, setQueue] = React.useState({queue: ''})
     const [data, setData] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
     const [lastUpdated, setLastUpdated] = React.useState(null);
