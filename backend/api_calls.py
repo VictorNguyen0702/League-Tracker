@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 # Load environment variables from .env
 load_dotenv()
 API_key = os.getenv("RIOT_API_KEY")
-
+print(API_key)
 
 
 # --------------- Helper Functions for puu id and summoner id --------------- #
