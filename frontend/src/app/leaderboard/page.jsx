@@ -132,6 +132,21 @@ function Leaderboard() {
 
   }, [filters]);
 
+  useEffect(() => {
+    if (data && data.length > 0) {
+      const playerRows = data.map((player) => ({
+        name: player.summonerId,
+        rank: player.tier[0].toUpperCase() + player.tier.slice(1).toLowerCase() + " " + player.rank,
+        winRate: player.wins + " | " + player.losses,
+        leaguePoints: player.leaguePoints,
+        hotStreak: player.hotStreak ? '🔥' : '',
+        freshBlood: player.freshBlood ? '🐣' : '',
+        veteran: player.veteran ? '🧙‍♂️' : '',
+      }));
+      setRows(playerRows);
+    }
+  }, [data]); // Only run this effect when the data changes
+  
   return (
     <div></div>
   )
