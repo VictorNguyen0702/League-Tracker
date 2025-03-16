@@ -114,7 +114,7 @@ export default function PaginatedTable( {filters} ) {
 
   return (
     <div className="w-full rounded-xl p-10 bg-[var(--snowDark)]">
-      <h1 className="text-xl text-center font-bold mb-4">League of Legends Players</h1>
+      <h1 className="text-xl text-center font-bold text-[var(--polarDark)]  mb-4">League of Legends Players</h1>
       <Table cl>
         <TableHeader>
           <TableRow>

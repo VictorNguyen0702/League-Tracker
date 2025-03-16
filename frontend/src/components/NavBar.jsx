@@ -14,10 +14,10 @@ export default function Navbar() {
 
       {/* Desktop Navigation (Hidden on Small Screens) */}
         <div className="hidden md:flex text-[var(--snowMid1)] space-x-6 gap-10 pr-40">
-          <Link href="/Profiles" className="flex flex-row gap-2 items-center inline-block transition-transform duration-300 hover:-translate-y-1">
+          <Link href="/profiles" className="flex flex-row gap-2 items-center inline-block transition-transform duration-300 hover:-translate-y-1">
             Profiles
           </Link>
-          <Link href="/Leaderboard" className="flex flex-row gap-2 inline-block transition-transform duration-300 hover:-translate-y-1">
+          <Link href="/leaderboard" className="flex flex-row gap-2 inline-block transition-transform duration-300 hover:-translate-y-1">
             Leaderboard
           </Link>
           <Link href="#skills" className="flex flex-row gap-2  inline-block transition-transform duration-300 hover:-translate-y-1">

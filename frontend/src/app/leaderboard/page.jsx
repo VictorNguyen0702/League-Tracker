@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button" 
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue, } from "@/components/ui/select"
-import PaginatedTable from "@/components/paginatedTable";
+import PaginatedTable from "@/components/PaginatedTable";
 
 function Leaderboard() {
 
@@ -35,10 +35,10 @@ function Leaderboard() {
       transition={{ duration: 1.3 }}
       className="p-10"
     >
-      <h2 className="text-2xl font-bold text-center justify-center">Rank Leaderboards</h2>
+      <h2 className="text-2xl font-bold text-[var(--polarDark)] text-center justify-center">Rank Leaderboards</h2>
       <div className="flex flex-row p-10 gap-10">
         <div id="filters" className="flex flex-col gap-10 max-h-[412px] rounded-xl p-10 bg-[var(--snowDark)]">
-          <h2 className="text-xl text-center justify-center font-bold">Filters</h2>
+          <h2 className="text-xl text-[var(--polarDark)] text-center justify-center font-bold">Filters</h2>
           <div id="queue-buttons" className="flex flex-row gap-10">
             <Button value="solo" onClick={(event) => changeFilter("queue", event.target.value)} className={`bg-[var(--polarLight)] text-[var(--snowLight)] transition-shadow ${
               filters.queue === "solo" ? "shadow-3xl" : ""}`}>Ranked Solo</Button>
