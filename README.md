@@ -73,13 +73,3 @@ league-tracker/
 - `GET /leaderboard` - Retrieve overall rankings
 - `POST /update` - Update user stats manually
 
-## Troubleshooting
-- If `useRouter` errors occur, ensure you are using `usePathname` instead of `useRouter` for Next.js 13+.
-- If Tailwind custom colors are not working, ensure they are correctly added in `tailwind.config.js`.
-
-## Contributing
-Feel free to fork the repository and submit a pull request if you have any improvements or new features to add!
-
-## License
-This project is licensed under the MIT License.
-
