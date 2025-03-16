@@ -11,7 +11,7 @@ League Tracker is a web application that allows users to track player statistics
 ## Technologies Used
 - **Frontend:** Next.js, React, TailwindCSS
 - **Backend:** FastAPI, MongoDB
-- **Libraries:** Framer Motion, ShadCN UI, Zustand for state management
+- **Libraries:** Framer Motion, ShadCN UI
 
 ## Installation
 ### Prerequisites
@@ -45,9 +45,8 @@ uvicorn main:app --reload
 league-tracker/
 ├── backend/  # FastAPI backend
 │   ├── main.py
-│   ├── database.py
-│   ├── routes/
-│   └── models/
+│   ├── mongo.py
+│   ├── api_calls.py
 │
 ├── frontend/  # Next.js frontend
 │   ├── src/
